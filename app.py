@@ -192,72 +192,91 @@ plt.show()
 
 # In[20]:
 
-
 # Create the Dash app
 app = dash.Dash(__name__)
-
-server = app.server
 # Define the layout of the dashboard
 app.layout = html.Div(
-  children=[
-  html.H1('CO544-2023 Lab 3: Wine Quality Prediction'),
-  # Layout for exploratory data analysis: correlation between two selected features
-  html.Div([
-    html.H3('Exploratory Data Analysis'),
-    html.Label('Feature 1 (X-axis)'),
-    dcc.Dropdown(
-      id='x_feature',
-      options=[{'label': col, 'value': col} for col in data.columns],
-      value=data.columns[0]
-    )
-  ], style={'width': '30%', 'display': 'inline-block'}),
-  html.Div([
-    html.Label('Feature 2 (Y-axis)'),
-    dcc.Dropdown(
-      id='y_feature',
-      options=[{'label': col, 'value': col} for col in data.columns],
-      value=data.columns[1]
-    )
-  ], style={'width': '30%', 'display': 'inline-block'}),
-  dcc.Graph(id='correlation_plot'),
-  # Layout for wine quality prediction based on input feature values
-  html.H3("Wine Quality Prediction"),
-  html.Div([
-    html.Label("Fixed Acidity"),
-    dcc.Input(id='fixed_acidity', type='number', required=True),
-    html.Label("Volatile Acidity"),
-    dcc.Input(id='volatile_acidity', type='number', required=True),
-    html.Label("Citric Acid"),
-    dcc.Input(id='citric_acid', type='number', required=True),
-    html.Br(),
-    html.Label("Residual Sugar"),
-    dcc.Input(id='residual_sugar', type='number', required=True),
-    html.Label("Chlorides"),
-    dcc.Input(id='chlorides', type='number', required=True),
-    html.Label("Free Sulfur Dioxide"),
-    dcc.Input(id='free_sulfur_dioxide', type='number', required=True),
-    html.Br(),
-    html.Label("Total Sulfur Dioxide"),
-    dcc.Input(id='total_sulfur_dioxide', type='number', required=True),
-    html.Label("Density"),
-    dcc.Input(id='density', type='number', required=True),
-    html.Label("pH"),
-    dcc.Input(id='ph', type='number', required=True),
-    html.Br(),
-    html.Label("Sulphates"),
-    dcc.Input(id='sulphates', type='number', required=True),
-    html.Label("Alcohol"),
-    dcc.Input(id='alcohol', type='number', required=True),
-    html.Br(),
-  ]),
-  html.Div([
-    html.Button('Predict', id='predict-button', n_clicks=0),
-  ]),
-  html.Div([
-    html.H4("Predicted Quality"),
-    html.Div(id='prediction-output')
-  ])
+children=[
+html.H1('CO544-2023 Lab 3: Wine Quality Prediction',style={'backgroundColor':'blue'}),
+# Layout for exploratory data analysis: correlation between two selected features
+html.Div([
+html.H3('Exploratory Data Analysis'),
+html.Label('Feature 1 (X-axis)'),
+dcc.Dropdown(
+id='x_feature',
+options=[{'label': col, 'value': col} for col in data.columns],
+value=data.columns[0]
+)
+], style={'width': '30%', 'display': 'inline-block'}),
+html.Div([
+html.Label('Feature 2 (Y-axis)'),
+dcc.Dropdown(
+id='y_feature',
+options=[{'label': col, 'value': col} for col in data.columns],
+value=data.columns[1]
+)
+], style={'width': '30%', 'display': 'inline-block'}),
+dcc.Graph(id='correlation_plot'),
+# Layout for wine quality prediction based on input feature values
+html.H3("Wine Quality Prediction"),
+html.Div([
+    html.Table([
+        html.Tr([
+            html.Td(html.Label("Fixed Acidity")),
+            html.Td(dcc.Input(id='fixed_acidity', type='number', required=True))
+        ]),
+        html.Tr([
+            html.Td(html.Label("Volatile Acidity")),
+            html.Td(dcc.Input(id='volatile_acidity', type='number', required=True))
+        ]),
+        html.Tr([
+            html.Td(html.Label("Citric Acid")),
+            html.Td(dcc.Input(id='citric_acid', type='number', required=True))
+        ]),
+        html.Tr([
+            html.Td(html.Label("Residual Sugar")),
+            html.Td(dcc.Input(id='residual_sugar', type='number', required=True))
+        ]),
+        html.Tr([
+            html.Td(html.Label("Chlorides")),
+            html.Td(dcc.Input(id='chlorides', type='number', required=True))
+        ]),
+        html.Tr([
+            html.Td(html.Label("Free Sulfur Dioxide")),
+            html.Td(dcc.Input(id='free_sulfur_dioxide', type='number', required=True))
+        ]),
+        html.Tr([
+            html.Td(html.Label("Total Sulfur Dioxide")),
+            html.Td(dcc.Input(id='total_sulfur_dioxide', type='number', required=True))
+        ]),
+        html.Tr([
+            html.Td(html.Label("Density")),
+            html.Td(dcc.Input(id='density', type='number', required=True))
+        ]),
+        html.Tr([
+            html.Td(html.Label("pH")),
+            html.Td(dcc.Input(id='ph', type='number', required=True))
+        ]),
+        html.Tr([
+            html.Td(html.Label("Sulphates")),
+            html.Td(dcc.Input(id='sulphates', type='number', required=True))
+        ]),
+        html.Tr([
+            html.Td(html.Label("Alcohol")),
+            html.Td(dcc.Input(id='alcohol', type='number', required=True))
+        ])
+    ])
 ])
+,
+html.Div([
+html.Button('Predict', id='predict-button', n_clicks=0),
+]),
+html.Div([
+html.H4("Predicted Quality"),
+html.Div(id='prediction-output')
+])
+])
+
 
 
 # In[21]:
